@@ -25,30 +25,32 @@ namespace Presto.SWCamp.Lyrics
     {
         string[] lines; /*= File.ReadAllLines(@"C:\Users\syh04\Desktop\Presto.Lyrics.Sample\Musics\볼빨간사춘기 - 여행.lrc");*/
         string[] lyrics;//출력할 가사
-        TimeSpan[] times;//가사 시간
+        double[] times;//가사 시간
         public LyricsWindow()
         {
             InitializeComponent();
             lines = File.ReadAllLines(@"C:\Users\syh04\Desktop\Presto.Lyrics.Sample\Musics\볼빨간사춘기 - 여행.lrc");
             lyrics = new string[lines.Length];
-            times= new TimeSpan[lines.Length];
+            times = new double[lines.Length];
             for (int i = 3; i < lines.Length; i++)
             {
                 var splitData = lines[i].Split(']');
                 var time = TimeSpan.ParseExact(splitData[0].Substring(1).Trim(),
                    @"mm\:ss\.ff", CultureInfo.InvariantCulture);//시간
-                times[i] = time;
-                for (int j = 0; j < lines[i].Length; j++)//]가두 개일 경우
-                {
-                    if (lines[i].Contains("]"))
-                    {
-                        splitData =splitData[1].Split(']');
-                        //      time = TimeSpan.ParseExact(splitData[1].Substring(1).Trim(),
-                        //@"mm\:ss\.ff", CultureInfo.InvariantCulture);
-                    }
+                times[i] = Trans(time);
+                //for (int j = 0; j < lines[i].Length; j++)//]가두 개일 경우
+                //{
+                //    if (lines[i].Contains("]"))
+                //    {
+                //        splitData = splitData[1].Split(']');
+                //        time = TimeSpan.ParseExact(splitData[1].Substring(1).Trim(),
+                //  @"mm\:ss\.ff", CultureInfo.InvariantCulture);
+                //    }
 
-                }
+                //}
+
                 lyrics[i] = splitData[1];
+
             }
 
             //for (int i = 3; i < lines.Length; i++)
@@ -73,10 +75,42 @@ namespace Presto.SWCamp.Lyrics
             timer.Tick += Timer_Tick;
             timer.Start();
         }
+        //private int Searchbin(double[] lintime, double ltime)//가사들 시간, 현재 시간 인자로 받음, 이진탐색
+        //{
+        //    int left, mid, right;
+        //    left = 3; right = lintime.Length-1; mid = (left + right) / 2;//0,1,2는 곡정보라서 3~lin.Length-1
+        //    while (left < right)
+        //    {
+        //        if (ltime < lintime[mid])
+        //        {
+        //            right = mid - 1;
+        //            mid = (left + right) / 2;
+        //        }
+        //        else if (ltime > lintime[mid])
+        //        {
+        //            left = mid + 1;
+        //            mid = (left + right) / 2;
+        //        }
+        //        else
+        //        {
+        //            return mid;
+        //        }
+        //    }
+
+        //    return left;
+        //}
+        private int Trans(TimeSpan a)
+        {
+            int result = 0;
+            result += a.Seconds * 1000;
+            result += a.Milliseconds * 10;
+            result += a.Minutes * 60 * 1000;
+            return result;
+        }
         private int Searchbin(double[] lintime, double ltime)//가사들 시간, 현재 시간 인자로 받음, 이진탐색
         {
             int left, mid, right;
-            left = 3; right = lintime.Length-1; mid = (left + right) / 2;//0,1,2는 곡정보라서 3~lin.Length-1
+            left = 3; right = lintime.Length - 1; mid = (left + right) / 2;//0,1,2는 곡정보라서 3~lin.Length-1
             while (left < right)
             {
                 if (ltime < lintime[mid])
@@ -99,9 +133,14 @@ namespace Presto.SWCamp.Lyrics
         }
         private void Timer_Tick(object sender, EventArgs e)
         {
-            //textLyrics.Text = PrestoSDK.PrestoService.Player.Position.ToString();
-            int i=Searchbin(times, PrestoSDK.PrestoService.Player.Position);
+
+            TimeSpan a = TimeSpan.FromMilliseconds(PrestoSDK.PrestoService.Player.Position);
+            int i = Searchbin(times, Trans(a));
             textLyrics.Text = lyrics[i];
+            t.Text = PrestoSDK.PrestoService.Player.Position.ToString();
+            //int i=Searchbin(times, PrestoSDK.PrestoService.Player.Position);
+
+
 
             //while (true)//시간 같은 것들 출력
             //{
