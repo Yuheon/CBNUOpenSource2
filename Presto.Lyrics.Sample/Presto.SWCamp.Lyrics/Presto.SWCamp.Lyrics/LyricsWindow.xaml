@@ -25,5 +25,12 @@
         <TextBlock 
             x:Name="t"                       
             TextAlignment="Center" />
+        <TextBlock  x:Name="tt"                       
+            TextAlignment="Center" />
+        <TextBox x:Name="min" Height="36" Margin="43,0,0,0" TextWrapping="Wrap" Text="TextBox" Width="85"/>
+        <TextBox x:Name="sec" Height="31" Margin="233,0,0,0" TextWrapping="Wrap" Text="TextBox" Width="111"/>
+        <TextBox x:Name="mili" Height="33" Margin="411,0,0,0" TextWrapping="Wrap" Text="TextBox" Width="122"/>
+        <TextBox x:Name="len" Height="50" Margin="93,0,0,0" TextWrapping="Wrap" Text="TextBox" Width="141"/>
+        <TextBox x:Name="test" Height="51" Margin="40,0,0,0" TextWrapping="Wrap" Text="TextBox" Width="39"/>
     </StackPanel>
 </Window>
