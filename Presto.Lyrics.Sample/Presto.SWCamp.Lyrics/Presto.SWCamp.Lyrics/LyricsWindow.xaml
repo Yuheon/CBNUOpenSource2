@@ -9,28 +9,22 @@
     Width="600"
     Height="400"
     DataContext="{x:Static ps:PrestoSDK.PrestoService}"
-    mc:Ignorable="d">
+    mc:Ignorable="d" Background="#FFE8DA54">
 
     <StackPanel VerticalAlignment="Center">
         <TextBlock
-            FontSize="14"
-            Text="{Binding Player.CurrentMusic.Title}"
+            x:Name="title_Singer_info"
+            FontSize="14"           
             TextAlignment="Center" />
-
         <TextBlock
             x:Name="textLyrics"
             FontSize="24"
             Text="가사가 여기에 표시됩니다."
             TextAlignment="Center" />
         <TextBlock 
-            x:Name="t"                       
-            TextAlignment="Center" />
-        <TextBlock  x:Name="tt"                       
-            TextAlignment="Center" />
-        <TextBox x:Name="min" Height="36" Margin="43,0,0,0" TextWrapping="Wrap" Text="TextBox" Width="85"/>
-        <TextBox x:Name="sec" Height="31" Margin="233,0,0,0" TextWrapping="Wrap" Text="TextBox" Width="111"/>
-        <TextBox x:Name="mili" Height="33" Margin="411,0,0,0" TextWrapping="Wrap" Text="TextBox" Width="122"/>
-        <TextBox x:Name="len" Height="50" Margin="93,0,0,0" TextWrapping="Wrap" Text="TextBox" Width="141"/>
-        <TextBox x:Name="test" Height="51" Margin="40,0,0,0" TextWrapping="Wrap" Text="TextBox" Width="39"/>
+            x:Name="nextLyr"
+            FontSize="18"
+            Opacity="0.5"            
+            TextAlignment="Center" Height="27" Margin="0,0,0.333,0" Text="다음가사가 여기에 표시됩니다."/>
     </StackPanel>
 </Window>
